@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { urlBase64ToUint8Array } from "./utils";
 
-const VAPID_PUBLIC_KEY =
-  "BGfbF6mIKiTS75LJ2c-Cwa0GcQ6Cy-3fVJKw90xHVBLkXt3OcCDr8H8nQKcSkMwpt7GCWHiZGuTT436UlUU4sR0";
+const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY || "";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 function App() {
   const [status, setStatus] = useState("Idle");
 
@@ -21,7 +21,7 @@ function App() {
       });
 
       setStatus("Sending subscription to Backend...");
-      await fetch("http://localhost:5000/subscribe", {
+      await fetch(`${BACKEND_URL}/subscribe`, {
         method: "POST",
         body: JSON.stringify(subscription),
         headers: { "Content-Type": "application/json" },
